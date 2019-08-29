@@ -1,2 +1,2 @@
-# drive-api-ts
-Typescript library for google drive API.
+# Drive APP
+Web APP for google drive.
