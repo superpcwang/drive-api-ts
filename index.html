@@ -19,7 +19,7 @@
       <p>
         <button class="btn btn-light display-none" id="authorize-btn" onclick="handleAuthClick()">Authorize</button>
         <button class="btn btn-light display-none" id="signout-btn" onclick="handleSignoutClick()">Sign Out</button>
-        <button class="btn btn-light display-none" id="file-btn" onclick="handleFileClick()">file</button>
+        <button class="btn btn-light display-none" id="file-btn" onclick="handleFileClick()">File</button>
       </p>
       <pre id="content" style="white-space: pre-wrap;"></pre>
     </div>
@@ -37,6 +37,7 @@
 
       var authorizeButton = document.getElementById('authorize-btn');
       var signoutButton = document.getElementById('signout-btn');
+      var fileButton = document.getElementById('file-btn');
       var infoText = document.getElementById('info-txt');
       /**
        *  On load, called to load the auth2 library and API client library.
@@ -79,6 +80,7 @@
           //set button
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'inline-block';
+          fileButton.style.display = 'inline-block';
 
           let drive = gapi.client.drive;
           drive.files.list({
@@ -104,6 +106,7 @@
           //set button
           authorizeButton.style.display = 'inline-block';
           signoutButton.style.display = 'none';
+          fileButton.style.display = 'none';
         }
       }
 
@@ -127,7 +130,28 @@
        *  Access file upon button click.
        */
        function handleFileClick(event) {
-        
+        console.log('Handle file...');
+        let drive = gapi.client.drive;
+        let fileMetadata = {
+          'name': 'config.json',
+          'parents': ['appDataFolder']
+        };
+        let media = {
+          mimeType: 'application/json',
+          body: fs.createReadStream('files/config.json')
+        };
+        drive.files.create({
+          resource: fileMetadata,
+          media: media,
+          fields: 'id'
+        }, function (err, file) {
+          if (err) {
+            // Handle error
+            console.error(err);
+          } else {
+            console.log('Folder Id:', file.id);
+          }
+        });
       }
 
       /**
