@@ -1,0 +1,21 @@
+body{
+  background: LightSkyBlue;
+}
+.main-container{
+  position:absolute;
+  top:0;
+  margin: 1rem auto;
+  text-align:center;
+  width:100%;
+  color: SteelBlue ;
+}
+.btn-light,
+.btn-light:hover,
+.btn-light:active,
+.btn-light:focus{
+  color: SteelBlue ;
+}
+.display-none{
+  display: none;
+}
+
